@@ -13,6 +13,10 @@ RUN apk add --no-cache \
     curl \
   && mkdir -p /run/apache2
 
+# Ajouter cette ligne après l'installation d'Apache
+RUN echo "ServerName localhost" >> /etc/apache2/httpd.conf
+
+
 # Workdir = default Alpine Apache doc root
 WORKDIR /var/www/localhost/htdocs
 
