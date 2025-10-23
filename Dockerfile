@@ -13,9 +13,6 @@ RUN apk add --no-cache \
     curl \
   && mkdir -p /run/apache2
 
-# Ensure DirectoryIndex includes index.php (PHP module config is provided by php82-apache2)
-RUN echo "\nDirectoryIndex index.php index.html\n" >> /etc/apache2/httpd.conf
-
 # Workdir = default Alpine Apache doc root
 WORKDIR /var/www/localhost/htdocs
 
