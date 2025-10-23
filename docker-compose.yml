@@ -1,0 +1,35 @@
+services:
+
+  db:
+    image: mariadb:11.4
+    container_name: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: test
+      MARIADB_PASSWORD: test
+      MARIADB_DATABASE: test
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/articles.sql:/docker-entrypoint-initdb.d/1-articles.sql:ro
+    ports:
+      - "3306:3306"
+
+  web:
+    build: .
+    container_name: php-apache
+    ports:
+      - "8080:80"
+    environment:
+      # Used by PHP to connect
+      DB_HOST: db
+      DB_NAME: test
+      DB_USER: test
+      DB_PASS: test
+    depends_on:
+      - db
+    volumes:
+      - ./app:/var/www/localhost/htdocs:ro
+
+
+volumes:
+  db_data:
